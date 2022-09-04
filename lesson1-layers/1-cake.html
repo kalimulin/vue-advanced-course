@@ -63,40 +63,37 @@
 		let app = Vue.createApp({
 			data(){
 				return {
-					layers: [],
+					layers: [
+						{ type: 'biscuit', height: 5 },
+						{ type: 'beze', height: 5 },
+						{ type: 'curd', height: 5 }
+					],
 					layersTypes: {
 						biscuit: {
-							price1sm: 50,
+							price1cm: 50,
 							label: 'Бисквит'
 						},
 						beze: {
-							price1sm: 100,
+							price1cm: 100,
 							label: 'Безе'
 						},
 						curd: {
-							price1sm: 60,
+							price1cm: 60,
 							label: 'Творожный'
-						}
+						},
 					},
 					defaultLayer: 'biscuit',
 					defaultHeight: 5
 				}
 			},
 			computed: {
-				hasLayers(){
+				hasLayers() {
 					return this.layers.length > 0;
 				},
-				price(){
-					let sum = 0;
-
-					for(let i = 0; i < this.layers.length; i++){
-						let layer = this.layers[i];
-						let ltype = this.layersTypes[layer.type];
-						
-						sum += layer.height * ltype.price1sm;
-					}
-
-					return sum;
+				price() {
+					return this.layers.reduce((sum, layer) => {
+						return newSum =  sum + layer.height * this.layersTypes[layer.type].price1cm;
+					}, 0)
 				}
 			},
 			methods: {
@@ -106,7 +103,7 @@
 						height: this.defaultHeight 
 					});
 				},
-				removeLayer(i){
+				removeLayer(i) {
 					this.layers.splice(i, 1);
 				}
 			}
